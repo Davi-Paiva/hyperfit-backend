@@ -30,3 +30,11 @@ async def delete_user_by_email(email: str):
     result = await collection.delete_one({"email": email})
     return result.deleted_count
 
+async def get_user_by_id(user_id: str):
+    collection = get_user_collection()
+    user = await collection.find_one({"_id": ObjectId(user_id)})
+    if user:
+        user["_id"] = str(user["_id"])
+        return user
+    return None
+
